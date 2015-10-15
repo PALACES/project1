@@ -13,7 +13,7 @@ float x, y;       // Position.
 float dx, dy;     // Speed.
 float monsterX, monsterY;
 float sunX, sunY; //Sun variable.
-
+float goldX, goldY;
 //// SETUP:  window size, initialization (start in middle of screen).
 void setup() {
   size( 640,480);
@@ -24,7 +24,8 @@ void setup() {
   dy=  2;
   sunX= width*3/4;
   sunY= height/8;
-
+  goldX = width/2;
+  goldY= height/2;
 }
 
 void reset() {
@@ -34,7 +35,8 @@ void reset() {
   y=  height/4;
   dx=  3;
   dy=  2;
-
+  goldX = random(0, width);
+  goldY = random(horizon, height);
 }
 //// NEXT FRAME:  scene, action, show.
 void draw() {
@@ -100,18 +102,12 @@ void hero() {
   fill(255);
   arc(x+12.5, y-6, 10, 10, 0, PI); //His mouth
   text( "Bry", x+3, y+24 ); //His name!
-  x=  x + dx;
+ // x=  x + dx;
+ // y=  y + dy;
   
-if(x>width-20) { dx= -dx; } //reverses motion when hitting borders
-  if(x<1) { dx= -dx; }
-
-  y=  y + dy;  
-  if (y<20 || y>height-20) {
-    dy= -dy;
-   
-  }
-  
-
+  x=  x - ( x - goldX)/30;
+  y=  y - ( y - goldY)/40;
+ 
 }
 void monster() {
   monsterX=  monsterX - (monsterX-x)/30;
@@ -119,15 +115,18 @@ void monster() {
   text( monsterX, 10, 10 );
   text( monsterY, 10, 20 );
   fill( 0 );
-  rect(monsterX, monsterY, 30, 60, 7);
+  rect(monsterX, monsterY, 60, 60, 7);
   ellipse(monsterX+15, monsterY-15, 30, 30);
   text( "RAWR!!", monsterX, monsterY-40 );
 }
 void gold() {
   fill(227, 222, 89);
-  ellipse(width/2, height/2, 30, 22);
+  ellipse(goldX, goldY, 30, 22);
   
-if 
+if (dist(goldX, goldY, x, y) < 15) {
+  reset();
+}
+
 }
 
 void mousePressed() {
