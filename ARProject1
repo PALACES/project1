@@ -137,7 +137,7 @@ void mousePressed() {
   dy= random(-4, +4);
   
 }
-
+//HUM
 void keyPressed() {
   if (key == 'q')
   exit();
